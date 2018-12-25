@@ -11,21 +11,21 @@ const port = 2000;
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.
-const db = mysql.createConnection ({
-    host: 'localhost',
-    user: 'postgres',
-    password: 'postgres',
-    database: 'cysta'
-});
+// const db = mysql.createConnection ({
+//     host: 'localhost',
+//     user: 'postgres',
+//     password: 'postgres',
+//     database: 'cysta'
+// });
 
 // connect to database
-db.connect((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('Connected to database');
-});
-global.db = db;
+// db.connect((err) => {
+//     if (err) {
+//         throw err;
+//     }
+//     console.log('Connected to database');
+// });
+// global.db = db;
 
 // configure middleware
 app.set('port', process.env.port || port); // set express to use this port
