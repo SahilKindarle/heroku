@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    table#table-data
+        thead
+            tr
+                td Username
+                td Birthday
+        tbody#table-body
+    form.col.s12
+        .row
+            .input-field.col.s6
+                input#first_name.validate(placeholder='Placeholder', type='text')
+                label(for='first_name') First Name
+        a.btn.waves-effect.waves-light(onclick='createUser()')
+            | Submit
+            i.material-icons.right send
+    script.
+        function createUser() {
+        $.get("/create", {
+        user: $("#first_name").val()
+        }, function(data){
+        if(data){
+        poptable();
+        }
+        })
+        }
+        function poptable(){
+        $('#table-body').html('');
+        $.get('/search', function (allitems) {
+        allitems.forEach(item => {
+        $('#table-body').append('<tr><td>' + item.username + '</td><td>' + item.birthday +
+        '</td></tr>')
+        });
+        })
+        }
+        $(document).ready(function () {
+        poptable()
+        })
