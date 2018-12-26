@@ -5,15 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const Sequelize = require('sequelize');
 
+var app = express();
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var app = express();
 
-
-
-const PORT = process.env.PORT || 3000
-const DBPATH = process.env.DATABASE_URL ||'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh'
+const PORT = process.env.PORT || 3000;
+const DBPATH = process.env.DATABASE_URL ||'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh';
 
 
 const sequelize = new Sequelize(DBPATH)
@@ -51,10 +50,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+app.get('/create', (req, res) => {
+    
+    User.create({
+        username: req.query.user,
+        birthday: new Date()
+    }).then((result)=>{
+        
+        res.send(true)
+    })
 
-app.get('/search', (req, res) => {
-  User.findAll({}).then(users => res.send(users))
 })
+
+
 
 
 // catch 404 and forward to error handler
