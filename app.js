@@ -1,6 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
-var Sequelize = require('sequelize');
+var Sequelize = require('Sequelize');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
