@@ -1,9 +1,10 @@
 var createError = require('http-errors');
 var express = require('express');
+var Sequelize = require('sequelize');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const Sequelize = require('sequelize');
+
 
 var app = express();
 
