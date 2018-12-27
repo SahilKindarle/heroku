@@ -1,4 +1,7 @@
 function createUser() {
+    poptable();
+
+    
     $.get("/create", {
         user: $("#first_name").val()
     }, function(data){

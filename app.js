@@ -11,7 +11,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3450;
 const DBPATH = process.env.DATABASE_URL ||'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh';
 
 
@@ -50,6 +50,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+
+
 app.get('/create', (req, res) => {
     
     User.create({
@@ -63,7 +65,9 @@ app.get('/create', (req, res) => {
 })
 
 
-
+app.get('/search', (req, res) => {
+    User.findAll({}).then(users => res.send(users))
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
