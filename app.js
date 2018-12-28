@@ -1,41 +1,37 @@
-var createError = require('http-errors');
-var express = require('express');
-var Sequelize = require('Sequelize');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express')
+const mysql = require('mysql')
+var path =require('path')
+var logger = require('morgan')
+const bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
 
 
-var app = express();
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const PORT = process.env.PORT || 3000
+const DBPATH = process.env.DATABASE_URL || 'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh'
 
 
-const PORT = process.env.PORT || 3450;
-const DBPATH = process.env.DATABASE_URL ||'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh';
+//Create Connection
+const db = mysql.createConnection({
+    host : 'localhost',
+    user: 'root',
+    password: '',
+    database: 'nodemysql'
+});
+
+db.connect((err) =>{
+    if(err)
+    {
+        throw(err)
+    }
+    console.log('connected');
+});
+const app = express();
 
 
-const sequelize = new Sequelize(DBPATH)
+app.use(bodyParser({
+    extended: true
+}))
 
-console.log("connected");
-
-
-// TABLE 'user'
-const User = sequelize.define('user', {
-    username: Sequelize.STRING,
-    birthday: Sequelize.DATE
-})
-
-sequelize.sync()
-
-
-//
-// app.get('/', (req, res) => {
-// //    res.sendFile(__dirname+"/index.html")
-//      res.render('index')
-// })
-//
 
 
 // view engine setup
@@ -48,47 +44,107 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 
+//Create DB
+app.get('/createdb', (req, res) => {
+    let sql = 'CREATE DATABASE nodemysql';
+    db.query(sql, (err, result) => {
+        if(err)throw(err);
+        console.log(result);
+        res.send('database created');
+    });
+});
 
-app.get('/create', (req, res) => {
-    
-    User.create({
-        username: req.query.user,
-        birthday: new Date()
-    }).then((result)=>{
-        
-        res.send(true)
+//Create Table Post name
+app.get('/createtableone', (req,res) => {
+    let sql = 'CREATE TABLE tableone(id int AUTO_INCREMENT, name VARCHAR(255), primary key (id))';
+    db.query(sql, (err, result) =>{
+        if(err) throw(err);
+        console.log(result);
+        res.send('post table created');
+    })
+});
+
+
+//Insert some data dynamic
+app.get('/addname/:name',(req,res) => {
+    let postname = {name : req.params.name};
+    let sql = 'INSERT INTO tableone SET ?';
+    let query= db.query(sql, postname, (err, result) =>
+    {
+        if(err) throw(err);
+        console.log(result);
+        res.send('name' + req.params.name+ 'added');
     })
 
-})
-
-
-app.get('/search', (req, res) => {
-    User.findAll({}).then(users => res.send(users))
-})
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+//Select All
+app.get('/all',(req,res) => {
+    let sql = 'SELECT * FROM tableone';
+    let query= db.query(sql, (err, results) =>
+    {
+        if(err) throw(err);
+        console.log(results);
+        // res.send('name' + req.params.name+ 'added');
+        res.send("post fetched");
+    })
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
 });
 
-module.exports = app;
+
+//Select Single Post
+app.get('/getone/:id',(req,res) => {
+    // let sql = 'SELECT * FROM tableone WHERE id = ${req.params.id}';
+    let sql = `SELECT * FROM tableone WHERE id = ${req.params.id}`;
+    let query= db.query(sql, (err, result) =>
+    {
+        if(err) throw(err);
+        console.log(result);
+        // res.send('name' + req.params.name+ 'added');a
+        res.send("fetched  " + req.params.id + "  ");
+    })
+
+});
+
+
+//Update Post
+app.get('/updateone/:id/:name',(req,res) => {
+    let newname = {name: req.params.name};
+    let sql = `UPDATE tableone SET name =  '${req.params.name}' WHERE id = ${req.params.id}`;
+    let query= db.query(sql, (err, result) =>
+    {
+        if(err) throw(err);
+        console.log(result);
+        // res.send('name' + req.params.name+ 'added');a
+        res.send("Updated  " + req.params.id + "  ");
+    })
+
+});
+
+
+//Delete Post
+app.get('/deleteone/:id',(req,res) => {
+    let sql = `DELETE FROM tableone WHERE id = ${req.params.id}`;
+    let query= db.query(sql, (err, result) =>
+    {
+        if(err) throw(err);
+        console.log(result);
+        // res.send('name' + req.params.name+ 'added');a
+        res.send("Deleted  " + req.params.id + "  ");
+    })
+
+});
+
+//route
+app.get('/',(req,res) =>
+{
+    res.render('index');
+});
+
 
 
 app.listen(PORT, () => {
-    console.info('App listening on port ' + PORT + '...')
-})
+    console.log("Server Started on PORT " + PORT + " ...");
+});
