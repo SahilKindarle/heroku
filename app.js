@@ -18,7 +18,7 @@ const db = mysql.createConnection({
     database: 'nodemysql'
 });
 
-db.connect((err) =>{
+DBPATH.connect((err) =>{
     if(err)
     {
         throw(err)
