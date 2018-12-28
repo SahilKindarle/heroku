@@ -57,8 +57,8 @@ app.get('/createdb', (req, res) => {
 });
 
 //Create Table Post name
-app.get('/createtableone', (req,res) => {
-    let sql = 'CREATE TABLE tableone(id int AUTO_INCREMENT, name VARCHAR(255), primary key (id))';
+app.get('/createtrialtable', (req,res) => {
+    let sql = 'CREATE TABLE trialtable(id int AUTO_INCREMENT, name VARCHAR(255), primary key (id))';
     db.query(sql, (err, result) =>{
         if(err) throw(err);
         console.log(result);
@@ -70,7 +70,7 @@ app.get('/createtableone', (req,res) => {
 //Insert some data dynamic
 app.get('/addname/:name',(req,res) => {
     let postname = {name : req.params.name};
-    let sql = 'INSERT INTO tableone SET ?';
+    let sql = 'INSERT INTO trialtable SET ?';
     let query= db.query(sql, postname, (err, result) =>
     {
         if(err) throw(err);
@@ -82,7 +82,7 @@ app.get('/addname/:name',(req,res) => {
 
 //Select All
 app.get('/all',(req,res) => {
-    let sql = 'SELECT * FROM tableone';
+    let sql = 'SELECT * FROM trialtable';
     let query= db.query(sql, (err, results) =>
     {
         if(err) throw(err);
@@ -96,8 +96,8 @@ app.get('/all',(req,res) => {
 
 //Select Single Post
 app.get('/getone/:id',(req,res) => {
-    // let sql = 'SELECT * FROM tableone WHERE id = ${req.params.id}';
-    let sql = `SELECT * FROM tableone WHERE id = ${req.params.id}`;
+    // let sql = 'SELECT * FROM trialtable WHERE id = ${req.params.id}';
+    let sql = `SELECT * FROM trialtable WHERE id = ${req.params.id}`;
     let query= db.query(sql, (err, result) =>
     {
         if(err) throw(err);
@@ -112,7 +112,7 @@ app.get('/getone/:id',(req,res) => {
 //Update Post
 app.get('/updateone/:id/:name',(req,res) => {
     let newname = {name: req.params.name};
-    let sql = `UPDATE tableone SET name =  '${req.params.name}' WHERE id = ${req.params.id}`;
+    let sql = `UPDATE trialtable SET name =  '${req.params.name}' WHERE id = ${req.params.id}`;
     let query= db.query(sql, (err, result) =>
     {
         if(err) throw(err);
@@ -126,7 +126,7 @@ app.get('/updateone/:id/:name',(req,res) => {
 
 //Delete Post
 app.get('/deleteone/:id',(req,res) => {
-    let sql = `DELETE FROM tableone WHERE id = ${req.params.id}`;
+    let sql = `DELETE FROM trialtable WHERE id = ${req.params.id}`;
     let query= db.query(sql, (err, result) =>
     {
         if(err) throw(err);
