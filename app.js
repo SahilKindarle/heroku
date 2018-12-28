@@ -4,7 +4,7 @@ var path =require('path')
 var logger = require('morgan')
 const bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
-
+const { Client } = require('pg');
 
 const PORT = process.env.PORT || 3000
 const dbname = process.env.DATABASE_URL
@@ -12,7 +12,7 @@ const dbname = process.env.DATABASE_URL
 
 
 
-const { Client } = require('pg');
+
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
