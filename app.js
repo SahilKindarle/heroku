@@ -76,7 +76,7 @@ app.get('/createdb', (req, res) => {
 });
 
 //Create Table Post name
-app.get('/createtableone', (req,res) => {
+app.post('/createtableone', (req,res) => {
     let sql = 'CREATE TABLE tableone(id int AUTO_INCREMENT, name VARCHAR(255), primary key (id))';
     client.query('CREATE TABLE tableone(id int AUTO_INCREMENT, name VARCHAR(255), primary key (id))', (err, res) =>{
         if(err) throw(err);
