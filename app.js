@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser')
 
 
 const PORT = process.env.PORT || 3000
+const dbname = process.env.DATABASE_URL
 // const DBPATH = process.env.DATABASE_URL || 'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh'
 
 
@@ -15,7 +16,7 @@ const db = mysql.createConnection({
     host : 'ec2-107-20-237-78.compute-1.amazonaws.com',
     user: 'junhvkycxagcdx',
     password: '2c385abfd5643d2c66807224583fc5a01eff0b36c17d5a42f1abec3a9e327132',
-    database: process.env.DATABASE_URL
+    database: dbname
 });
 
 db.connect((err) =>{
