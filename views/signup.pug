@@ -22,20 +22,20 @@ block content
                             .row
 
                                 .input-field.col.s12
-                                    input#names.validate(type='text')
+                                    input#names.validate(type='text',name='names')
                                     label#labels(for='names') Name
 
                                 .input-field.col.s12
-                                    input#emails.validate(type='email')
+                                    input#emails.validate(type='email',name='emails')
                                     label#labels(for='emails') Email
                                     //- span.helper-text(data-error='Try Entering an valid email Address') 
 
                                 .input-field.col.s12
-                                    input#passwords.validate(type='password')
+                                    input#passwords.validate(type='password', name='passwords')
                                     label#labels(for='passwords') Password
 
                                 .center.col.s12 
-                                    button.btn.waves-effect.waves-light(type='submit', name='action', style='background: #6747CD')
+                                    button.btn.waves-effect.waves-light(type='submit', value='submit', style='background: #6747CD')
                                         | Submit
     
    

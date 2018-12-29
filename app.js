@@ -154,12 +154,13 @@ app.get('/signup',(req,res) =>
     res.render('signup',{title: 'SignUp'});
 })
 
-app.post('/addsignupdetails',(req,res) => {
-
+app.post('/addsignupdetails',(req,res) =>
+{
     let name = req.body.names;
     let email = req.body.emails;
     let password = req.body.passwords;
     console.log(name);
+    console.log(req.body);
     let sql = "INSERT INTO `login` (name, email, passwordd) VALUES ('" + name + "','" + email + "','" +password + "')";
 
     let query= db.query(sql, (err, result) =>
