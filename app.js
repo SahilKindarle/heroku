@@ -167,7 +167,7 @@ app.post('/addsignupdetails',(req,res) =>
     {
         if(err) throw(err);
         console.log(result);
-        res.send("Added : "+ name + " ");
+        res.render('login',{title: 'Login'})
     })
 });
 
