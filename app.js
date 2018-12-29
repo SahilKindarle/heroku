@@ -173,6 +173,24 @@ app.post('/addsignupdetails',(req,res) =>
 
 
 
+app.post('/checklogindetails',(req,res) =>
+{
+    let email = req.body.email;
+    let password = req.body.password;
+    console.log(email);
+    console.log(req.body);
+    let sql = "SELECT * FROM `login` WHERE email ='" + email + "' && passwordd ='" + password + "'";
+
+    let query= db.query(sql, (err, result) =>
+    {
+        if(err) throw(err);
+        console.log(result);
+        res.send('Found')
+    })
+});
+
+
+
 app.listen(PORT, () => {
     console.log("Server Started on PORT " + PORT + " ...");
 });

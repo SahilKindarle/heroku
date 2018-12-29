@@ -18,27 +18,28 @@ block content
 
                 .container
                     .row.container(style='margin-top:10px')
-                        form.col.s12(action='/addlogindetails',method='POST')
+                        form.col.s12(action='/checklogindetails',method='POST')
                             .row
                                 .input-field.col.s12
-                                    input#email.validate(type='email')
+                                    input#email.validate(type='email', name='email')
                                     label(for='email') Email
                                     span.helper-text(data-error='Try Entering an valid email Address') 
 
                                 .input-field.col.s12
-                                    input#password.validate(type='password')
+                                    input#password.validate(type='password', name='password')
                                     label(for='password') Password
+
+                                .col.s6(style='padding:0px')
+                                    .right(style='padding:0px')
+                                        button.btn.waves-effect.waves-light.white(type='submit', value='submit', style='color: #6747CD')
+                                            | login
+                                .col.s6(style='padding:0px')
+                                    .left(style='padding:0px')
+                                        a.waves-effect.waves-light.btn.white(style='color: #6747CD', href="/signup") Sign Up
 
                                 a(href="#")
                                     p.right.white-text 
                                         | Forgot Password ??
-                    .row.center(style='padding-bottom:50px')    
-                        .col.s6(style='padding:0px')
-                            .right(style='padding:0px')
-                                a.waves-effect.waves-light.btn.white(href="/congrats")(style='color: #6747CD') Log IN
-                        .col.s6(style='padding:0px')
-                            .left(style='padding:0px')
-                                a.waves-effect.waves-light.btn.white(style='color: #6747CD', href="/signup") Sign Up
             
     
     
