@@ -1,0 +1,11 @@
+
+#email,#last_name
+{
+    border-bottom: 2px solid  white;
+    color: white;
+}
+
+.input-field>label
+{
+    color: white;
+}

@@ -140,8 +140,13 @@ app.get('/deleteone/:id',(req,res) => {
 //route
 app.get('/',(req,res) =>
 {
-    res.render('index');
+    res.render('index',{title: 'Welcome'});
 });
+
+app.get('/login',(req,res) =>
+{
+    res.render('login',{title: 'Login'});
+})
 
 
 

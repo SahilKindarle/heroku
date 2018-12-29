@@ -1,0 +1,15 @@
+.fullscreen
+{
+    height: 100%;
+}
+.ubuntu{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.voilet{
+    background: #6747CD;
+}
+
+.bold{
+    font-weight: bolder;
+}
