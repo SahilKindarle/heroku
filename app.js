@@ -149,6 +149,28 @@ app.get('/login',(req,res) =>
 })
 
 
+app.get('/signup',(req,res) =>
+{
+    res.render('signup',{title: 'SignUp'});
+})
+
+app.post('/addsignupdetails',(req,res) => {
+
+    let name = req.body.names;
+    let email = req.body.emails;
+    let password = req.body.passwords;
+    console.log(name);
+    let sql = "INSERT INTO `login` (name, email, passwordd) VALUES ('" + name + "','" + email + "','" +password + "')";
+
+    let query= db.query(sql, (err, result) =>
+    {
+        if(err) throw(err);
+        console.log(result);
+        res.send("Added : "+ name + " ");
+    })
+});
+
+
 
 app.listen(PORT, () => {
     console.log("Server Started on PORT " + PORT + " ...");

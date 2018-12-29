@@ -1,0 +1,42 @@
+extends layout
+block links
+    link(rel="stylesheet", href="/css/login.css")
+
+block content
+    .fullscreen.ubuntu.white(style="color:#6747CD")
+        .row(style='margin:0px')
+            .col.l4
+            .col.s12.l4.left(style='margin-top:50px')
+                img(src="/images/iconsvgpurple.svg", alt="", width="100")
+
+                h1.bold
+                    | CYSTA
+                h3.bold
+                    | Welcome,
+                h5.light
+                    | Sign up to Enroll
+
+                .container
+                    .row.container(style='margin-top:10px')
+                        form.col.s12(action='/addsignupdetails',method='POST')
+                            .row
+
+                                .input-field.col.s12
+                                    input#names.validate(type='text')
+                                    label#labels(for='names') Name
+
+                                .input-field.col.s12
+                                    input#emails.validate(type='email')
+                                    label#labels(for='emails') Email
+                                    //- span.helper-text(data-error='Try Entering an valid email Address') 
+
+                                .input-field.col.s12
+                                    input#passwords.validate(type='password')
+                                    label#labels(for='passwords') Password
+
+                                .center.col.s12 
+                                    button.btn.waves-effect.waves-light(type='submit', name='action', style='background: #6747CD')
+                                        | Submit
+    
+   
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js")

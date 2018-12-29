@@ -1,5 +1,5 @@
 
-#email,#last_name
+#email,#password
 {
     border-bottom: 2px solid  white;
     color: white;
@@ -8,4 +8,17 @@
 .input-field>label
 {
     color: white;
+}
+
+
+#emails,#passwords,#names
+{
+    border-bottom: 2px solid #6747CD;
+    color: #6747CD;
+}
+
+
+.input-field>#labels
+{
+    color: #6747CD;
 }
