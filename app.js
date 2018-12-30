@@ -5,7 +5,6 @@ var logger = require('morgan')
 const bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 
-
 const PORT = process.env.PORT || 3000
 const DBPATH = process.env.DATABASE_URL || 'postgres://irjmfvxh:EAj3N4DcMuOt8QeZDpJtEufIytTbRN-F@elmer.db.elephantsql.com:5432/irjmfvxh'
 
@@ -175,19 +174,43 @@ app.post('/addsignupdetails',(req,res) =>
 
 app.post('/checklogindetails',(req,res) =>
 {
+    let name = req.body.names;
     let email = req.body.email;
     let password = req.body.password;
-    console.log(email);
+    console.log(name);
     console.log(req.body);
-    let sql = "SELECT * FROM `login` WHERE email ='" + email + "' && passwordd ='" + password + "'";
+    let sql = "SELECT email,passwordd FROM `login` WHERE email = '" + email + "'";
 
     let query= db.query(sql, (err, result) =>
     {
-        if(err) throw(err);
+        if(err) 
+        {
+            res.send("Nahi Mila");
+        };
         console.log(result);
-        res.send('Found')
+        if(result[0].email == email)
+        {
+            if(result[0].passwordd == password)
+            {
+                res.send("mil gaya");
+            // res.render('signup',{title: 'SignUp'});
+            }
+            else
+            {
+                res.send('pass not found');
+            }
+        }
+        else
+        {
+            res.send("else wala email nhi mila");
+        }
+        
     })
 });
+
+
+
+
 
 
 
