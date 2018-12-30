@@ -179,17 +179,16 @@ app.post('/checklogindetails',(req,res) =>
     let password = req.body.password;
     console.log(name);
     console.log(req.body);
-    let sql = "SELECT email,passwordd FROM `login` WHERE email = '" + email + "'";
+    let sql = "SELECT passwordd FROM `login` WHERE email = '" + email + "'";
 
     let query= db.query(sql, (err, result) =>
     {
         if(err) 
         {
-            res.send("Nahi Mila");
+            throw(err);
+            // res.send("Nahi Mila");
         };
         console.log(result);
-        if(result[0].email == email)
-        {
             if(result[0].passwordd == password)
             {
                 res.send("mil gaya");
@@ -199,11 +198,7 @@ app.post('/checklogindetails',(req,res) =>
             {
                 res.send('pass not found');
             }
-        }
-        else
-        {
-            res.send("else wala email nhi mila");
-        }
+        
         
     })
 });
