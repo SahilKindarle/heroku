@@ -178,27 +178,61 @@ app.post('/checklogindetails',(req,res) =>
     let email = req.body.email;
     let password = req.body.password;
     console.log(name);
-    console.log(req.body);
-    let sql = "SELECT passwordd FROM `login` WHERE email = '" + email + "'";
+    console.log(req.body); 
+    let sql = "SELECT * FROM `login` WHERE email = '" + email + "'";
 
-    let query= db.query(sql, (err, result) =>
+    let query= db.query(sql, (err, results, fields) =>
     {
-        if(err) 
-        {
-            throw(err);
-            // res.send("Nahi Mila");
-        };
-        console.log(result);
-            if(result[0].passwordd == password)
-            {
-                res.send("mil gaya");
-            // res.render('signup',{title: 'SignUp'});
-            }
-            else
-            {
-                res.send('pass not found');
-            }
+    //     if(err) 
+    //     {
+    //         throw(err);
+    //         // res.send("Nahi Mila");
+    //     };
+    //     console.log(result);
+    //         if(result[0].passwordd == password)
+    //         {
+    //             res.send("mil gaya");
+    //         // res.render('signup',{title: 'SignUp'});
+    //         }
+    //         else
+    //         {
+    //             res.send('pass not found');
+    //         }
         
+
+    if (err) {
+        // console.log("error ocurred",error);
+        res.send({
+          "code":400,
+          "failed":"error ocurred"
+        })
+      }else{
+        // console.log('The solution is: ', results);
+        if(results.length >0){
+          if(results[0].passwordd == password){
+            res.send({
+              "code":200,
+              "success":"login sucessfull"
+                });
+          }
+          else{
+            res.send({
+              "code":204,
+              "success":"Email and password does not match"
+                });
+          }
+        }
+        else{
+          res.send({
+            "code":204,
+            "success":"Email does not exits"
+              });
+        }
+      }
+
+
+
+
         
     })
 });
