@@ -223,25 +223,15 @@ app.post('/checklogindetails',(req,res) =>
           }
         }
         else{
+        
           res.send({
             "code":204,
             "success":"Email does not exits"
               });
         }
-      }
-
-
-
-
-        
+      }        
     })
 });
-
-
-
-
-
-
 
 app.listen(PORT, () => {
     console.log("Server Started on PORT " + PORT + " ...");
