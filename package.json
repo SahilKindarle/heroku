@@ -1,10 +1,9 @@
 {
-  "name": "cysta",
+  "name": "iochat",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,7 +15,8 @@
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.9",
-    "pg": "^7.7.1",
-    "pug": "^2.0.3"
+    "path": "^0.12.7",
+    "pug": "^2.0.3",
+    "socket.io": "^2.2.0"
   }
 }

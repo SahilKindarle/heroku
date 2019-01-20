@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Chat Box</title>
+    <style>
+        body{
+            margin-top:30px;
+            
+            font-family: 'Rubik', sans-serif;
+        }
+        #messageArea{
+            display: none;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+
+        <div id="userFormArea" class="row">
+            <div class="col s12">
+                    <form id="userForm">
+                            <div class="input-field col s12">
+                                    <input id="username" type="text" class="validate">
+                                    <label for="username">Enter Username</label>
+                            </div>
+                            <button class="btn waves-effect waves-light" type="submit"  value="Login">Submit 
+                              </button>
+                                    
+                        </form>
+            </div>
+        </div>
+        <div class="row" id="messageArea">
+            <div class="col s12 m4">
+                Users Online
+                <ul id="users" class="collection">
+
+                </ul>
+            </div>
+            <div class="col s12 m8">
+                <div class="chat" id="chat">
+                    <form id="messageForm">
+                        <div class="input-field col s12">
+                            <textarea id="message" class="materialize-textarea" style="border: 2px solid red"></textarea>
+                            <label for="textarea1">Textarea</label>
+                        </div>
+                        <button class="btn waves-effect waves-light" type="submit"  value="Send Message">Submit 
+                          </button>
+                                
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(function(){
+            var socket = io.connect();
+            var $messageForm = $('#messageForm') ;
+            var $message = $('#message') ;
+            var $chat  = $('#chat');
+            var $userForm = $('#userForm');
+            var $userFormArea = $('#userFormArea');
+            var $messageArea = $('#messageArea');
+            var $users  = $('#users');
+            var $username  = $('#username');
+
+            $messageForm.submit(function(e) {
+                e.preventDefault();
+                socket.emit('send message', $message.val());
+                $message.val('');
+            });
+
+            socket.on('new message', function(data){
+                $chat.append('<div><p>'+data.user+'</p> <h4>'+ data.msg+'</h4> </div>')
+            });
+
+            $userForm.submit(function(e) {
+                e.preventDefault();
+                socket.emit('new user', $username.val(), function(data){
+                    if(data){
+                         $userFormArea.hide();
+                         $messageArea.show();
+                    }
+                });
+                $username.val('');
+            });
+
+            socket.on('get users', function(data){
+                var html = '';
+                for(i=0;i<data.length;i++)
+                {
+                    html += '<li class="collection-item"> '+data[i]+' <i class="material-icons right">message</i></li>'
+                }
+                $users.html(html);
+            });
+
+
+        });
+    </script>
+</body>
+
+</html>
